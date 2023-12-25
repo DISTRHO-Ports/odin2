@@ -14,7 +14,6 @@
 */
 
 void OdinAudioProcessorEditor::setGUISmall() {
-	m_title_button.setBounds(325, 0, 158, 32);
 
 	m_tuning.setTopLeftPosition(TUNING_POS_X, TUNING_POS_Y);
 
