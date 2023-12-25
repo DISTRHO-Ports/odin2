@@ -5,11 +5,7 @@ project(Odin2 VERSION 2.3.4 LANGUAGES C CXX ASM)
 
 # ================== CMake Subdirs ======================
 add_subdirectory(libs/clap-juce-extensions)
-if(UNIX AND NOT APPLE)
-  add_subdirectory(libs/JUCELV2)
-else()
-  add_subdirectory(libs/JUCE)
-endif()
+add_subdirectory(libs/JUCE)
 
 # ================= Git Commit Hash =====================
 find_package(Git)
@@ -30,10 +26,7 @@ option(ODIN2_COPY_PLUGIN_AFTER_BUILD "Copy JUCE Plugins after built" OFF)
 
 # ==================== Add Plugin =======================
 # Build LV2 only on Linux
-set(JUCE_FORMATS AU VST3 Standalone)
-if(UNIX AND NOT APPLE)
-    list(APPEND JUCE_FORMATS LV2)
-endif()
+set(JUCE_FORMATS AU LV2 VST VST3 Standalone)
 
 juce_add_plugin(Odin2
   VERSION "2.3.4"
@@ -61,10 +54,12 @@ target_compile_definitions(Odin2
   PUBLIC
     JUCE_STRICT_REFCOUNTEDPOINTER=1
     JUCE_USE_CURL=0
-    JUCE_VST3_CAN_REPLACE_VST2=0
+    JUCE_VST3_CAN_REPLACE_VST2=1
     JUCE_WEB_BROWSER=0
     JUCE_MODAL_LOOPS_PERMITTED=1
     JUCE_DISPLAY_SPLASH_SCREEN=0
+    JucePlugin_WantsLV2Latency=0
+    JucePlugin_WantsLV2Presets=0
 )
 
 # ==================== Check OS =======================
